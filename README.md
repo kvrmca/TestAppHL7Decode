@@ -1,7 +1,12 @@
-LogicApp is built to process ADT HL7 message and generate JSON Output
-assuming thet end users send only ADT A01 HL7 messages through Http post request
-LogicApp is invoked to by receiving raw HL7 message as input, process it through DecodeHL7 action and generate ADT Body xml & Message Header xml messages
-Compose action is used to prepare output JSON message as per end users requirement
-Send the JSON Output as Http response
-
+# Summary    
+This workflow receives an HTTP POST request containing an HL7 message, then:  
   
+- Decodes the HL7 payload  
+- Checks the message type  
+- Only allows ADT messages  
+- Extracts key patient, visit, and message header details from the HL7 content  
+- Returns the parsed data in a structured JSON response  
+  
+If the message type is not ADT, it returns a 400 error. If decoding or processing fails, it returns a 500 error.  
+  
+In short, its purpose is to validate and transform incoming HL7 ADT messages into a cleaner JSON format. 
