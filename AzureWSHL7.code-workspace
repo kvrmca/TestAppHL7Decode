@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "../LA-TestHL7"
+    }
+  ],
+  "settings": {
+    "terminal.integrated.env.windows": {
+      "PATH": "C:\\Users\\venki\\.azurelogicapps\\dependencies\\DotNetSDK;${env:PATH}"
+    },
+    "omnisharp.dotNetCliPaths": [
+      "C:\\Users\\venki\\.azurelogicapps\\dependencies\\DotNetSDK"
+    ],
+    "azurite.location": "C:\\Users\\venki\\.azurelogicapps\\.azurite"
+  }
+}

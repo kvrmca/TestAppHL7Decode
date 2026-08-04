@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "APP_KIND": "workflowapp",
+    "ProjectDirectoryPath": "c:\\Work\\Azure\\AzureWSHL7\\TestAppHL7Decode",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsSecretStorageType": "Files",
+    "FUNCTIONS_INPROC_NET8_ENABLED": "1"
+  }
+}

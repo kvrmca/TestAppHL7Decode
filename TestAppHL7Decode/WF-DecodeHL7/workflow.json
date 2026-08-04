@@ -1,0 +1,46 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "actions": {
+            "Decode_HL7": {
+                "type": "HL7Decode",
+                "inputs": {
+                    "messageToDecode": "@triggerBody()",
+                    "acknowledgementMode": "None"
+                },
+                "runAfter": {}
+            },
+            "Compose": {
+                "type": "Compose",
+                "inputs": "\"Output\": {\n\"messageHeader\": {\n\"messageType\": @{concat(xpath(body('Decode_HL7')['headerContent'],'string(//MSH/MSH.9_MessageType/CM_MSG.0_MessageType)'),'^',xpath(body('Decode_HL7')['headerContent'],'string(//MSH/MSH.9_MessageType/CM_MSG.1_TriggerEvent)'))},\n\"messageControlId\": @{xpath(body('Decode_HL7')['headerContent'],'string(//MSH/MSH.10_MessageControlId)')},\n\"hl7Version\": @{xpath(body('Decode_HL7')['headerContent'],'string(//MSH/MSH.12_VersionId/VID_0_VersionId)')}\n},\n\"patient\": {\n\"patientId\": @{xpath(body('Decode_HL7')['messageContent'],'string(//PID_PatientIdentification/PID_3_PatientIdentifierList/CX_0_IdNumber)')},\n\"firstName\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PID_PatientIdentification/PID_5_PatientName/XPN_1_GivenName)')},\n\"lastName\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PID_PatientIdentification/PID_5_PatientName/XPN_0_FamilyName/XPN_0_0_Surname)')},\n\"dateOfBirth\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PID_PatientIdentification/PID_7_DateTimeOfBirth)')},\n\"gender\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PID_PatientIdentification/PID_8_AdministrativeSex)')},\n\"phoneNumber\": @{ xpath(body('Decode_HL7')['messageContent'], 'string(//PID_PatientIdentification/PID_13_PhoneNumberHome/XTN_0_TelephoneNumber)')}\n},\n\"visit\": {\n\"patientClass\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PV1_PatientVisit/PV1_2_PatientClass)')},\n\"location\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PV1_PatientVisit/PV1_3_AssignedPatientLocation/PL_0_PointOfCare)')},\n\"attendingDoctor\": {\n\"doctorId\": @{xpath(body('Decode_HL7')['messageContent'], 'string(//PV1_PatientVisit/PV1_7_AttendingDoctor/XCN_0_IdNumber)')},\n\"firstName\": @{xpath(body('Decode_HL7')['messageContent'],'string(//PV1_PatientVisit/PV1_7_AttendingDoctor/XCN_2_GivenName)')},\n\"lastName\": @{ xpath(body('Decode_HL7')['messageContent'], 'string(//PV1_PatientVisit/PV1_7_AttendingDoctor/XCN_1_FamilyName/XCN_1_0_Surname)')}\n}\n}\n}",
+                "runAfter": {
+                    "Decode_HL7": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "Response": {
+                "type": "Response",
+                "kind": "Http",
+                "inputs": {
+                    "statusCode": 200,
+                    "body": "@outputs('Compose')"
+                },
+                "runAfter": {
+                    "Compose": [
+                        "SUCCEEDED"
+                    ]
+                }
+            }
+        },
+        "outputs": {},
+        "triggers": {
+            "When_an_HTTP_request_is_received": {
+                "type": "Request",
+                "kind": "Http"
+            }
+        }
+    },
+    "kind": "Stateful"
+}

@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTIONS_INPROC_NET8_ENABLED": "1",
+    "WORKFLOWS_SUBSCRIPTION_ID": "local",
+    "WORKFLOWS_RESOURCE_GROUP_NAME": "local",
+    "WORKFLOWS_LOCATION_NAME": "local",
+    "WORKFLOW_INTEGRATION_ACCOUNT_CALLBACK_URL": "https://prod-16.canadacentral.logic.azure.com:443/integrationAccounts/a7da7a0e3609492e89c5843df20fb3ec?api-version=2015-08-01-preview&sp=%2F%2F%2A&sv=1.0&sig=D6u4vs_B5HEZeQaP4g15OOYrCMXCdKgwzWxG6HDInvE",
+    "languageWorkers__node__defaultExecutablePath": "C:\\Users\\venki\\.azurelogicapps\\dependencies\\NodeJs\\node.exe"
+  }
+}
